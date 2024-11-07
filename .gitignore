@@ -365,3 +365,4 @@ FodyWeavers.xsd
 # Added Stuff
 build/
 build/*
+cmake-build-*
