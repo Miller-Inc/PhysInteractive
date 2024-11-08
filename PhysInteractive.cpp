@@ -10,17 +10,10 @@ using namespace std;
 
 int main()
 {
-	Sphere s1 = Sphere(1.0f, 1.0f, Vector3(0.0f, 0.0f, 0.0f));
-
-	s1.name = "Sphere1";
-
-	std::chrono::high_resolution_clock::time_point t1 = std::chrono::high_resolution_clock::now();
-
-	cout << t1.time_since_epoch().count() << endl;
 
 #if CUDA_AVAILABLE
-	// kernel_main();
-	// std::string kernel = "GPU Used";
+	kernel_main();
+	std::string kernel = "GPU Used";
 #else
 	std::string kernel = "No GPU Used";
 #endif
@@ -54,11 +47,7 @@ int main()
 		cout << i.x << " " << i.y << " " << i.z << endl;
 	}
 
-	std::chrono::high_resolution_clock::time_point t2 = std::chrono::high_resolution_clock::now();
-
-	std::cout << t2.time_since_epoch().count() << std::endl;
-
-	// cout << kernel << endl;
+	cout << kernel << endl;
 	return 0;
 }
 

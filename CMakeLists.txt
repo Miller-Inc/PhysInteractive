@@ -48,11 +48,20 @@ if (CUDAToolkit_FOUND)
   message(STATUS "CUDA libraries: ${CUDAToolkit_LIBRARIES}")
   message(STATUS "CUDA version: ${CUDAToolkit_VERSION}")
 
-  message(STATUS "Enabling CUDA")
-  enable_language(CUDA)
-
   set(HAS_CUDA TRUE)
-  add_definitions(-DCUDA_AVAILABLE=true)
+
+  if(${CUDAToolkit_VERSION} VERSION_LESS "12.0")
+    message(STATUS ${CUDAToolkit_VERSION})
+    message(WARNING "This project requires CUDA Toolkit 12.0 or higher.")
+    set(HAS_CUDA FALSE)
+  else()
+    message(STATUS "CUDA Toolkit version is compatible")
+
+    message(STATUS "Enabling CUDA")
+    add_definitions(-DCUDA_AVAILABLE=true)
+    enable_language(CUDA)
+  endif()
+
 else()
   message(STATUS "CUDA not found")
   set(HAS_CUDA FALSE)
