@@ -4,52 +4,48 @@
 #include "PhysInteractive.h"
 #include "MillerInc.PhysicsEngine/include/FullEngineIncludes.h"
 #include "MillerInc.PhysicsEngine/GPU/GPU-Macros.h"
+#include "MillerInc.PhysicsEngine/GPU/Cuda-Engine/gpuScene.h"
 
 using namespace std;
 // #define CUDA_AVAILABLE false
 
+
+class Testing
+{
+public:
+	static GPUScene* createScene(GPUScene* scene, int numOfObjs)
+	{
+		for (int i = 0; i < numOfObjs; i++)
+		{
+			scene->addCollisionObject(new Sphere(0.0, 1.0, Vector3()));
+		}
+		return scene;
+	}
+};
+
+
 int main()
 {
 
-#if CUDA_AVAILABLE
-	kernel_main();
-	std::string kernel = "GPU Used";
-#else
-	std::string kernel = "No GPU Used";
-#endif
+	auto* scene = Testing::createScene(new GPUScene(), 1);
 
-	std::vector<Vector3> vectors, vectors2, result;
+	std::cout << scene->getNumCollisionObjects() << std::endl;
 
-	// Create vectors
-	vectors.emplace_back(1.0f, 2.0f, 3.0f);
-	vectors.emplace_back(4.0f, 5.0f, 6.0f);
-	vectors.emplace_back(7.0f, 8.0f, 9.0f);
-	vectors.emplace_back(1.0f, 2.0f, 3.0f);
-	vectors.emplace_back(4.0f, 5.0f, 6.0f);
-	vectors.emplace_back(7.0f, 8.0f, 9.0f);
-	vectors.emplace_back(1.0f, 2.0f, 3.0f);
-	vectors.emplace_back(4.0f, 5.0f, 6.0f);
-	vectors.emplace_back(7.0f, 8.0f, 9.0f);
-	vectors2.emplace_back(1.0f, 2.0f, 3.0f);
-	vectors2.emplace_back(4.0f, 5.0f, 6.0f);
-	vectors2.emplace_back(7.0f, 8.0f, 9.0f);
-	vectors2.emplace_back(1.0f, 2.0f, 3.0f);
-	vectors2.emplace_back(4.0f, 5.0f, 6.0f);
-	vectors2.emplace_back(7.0f, 8.0f, 9.0f);
-	vectors2.emplace_back(1.0f, 2.0f, 3.0f);
-	vectors2.emplace_back(4.0f, 5.0f, 6.0f);
-	vectors2.emplace_back(7.0f, 8.0f, 9.0f);
+	Sphere* sph = new Sphere(0.0, 10.0, Vector3());
 
+	sph->name = "Remove Sphere";
 
-	Vector3Math::multiplyVectors(vectors, vectors2, result);
+	scene->addCollisionObject(sph);
 
-	for (auto & i : result) {
-		cout << i.x << " " << i.y << " " << i.z << endl;
-	}
+	std::cout << scene->getNumCollisionObjects() << std::endl;
 
-	cout << kernel << endl;
+	scene->removeCollisionObject(sph);
+
+	std::cout << scene->getNumCollisionObjects() << std::endl;
+
 	return 0;
 }
+
 
 // 0119949400
 // 0218057200
