@@ -1,55 +1,34 @@
-﻿// PhysInteractive.cpp : Defines the entry point for the application.
-//
+﻿// PhysInteractive.cpp : Defines the entry point for the application
 
 #include "PhysInteractive.h"
 #include "MillerInc.PhysicsEngine/include/FullEngineIncludes.h"
-#include "MillerInc.PhysicsEngine/GPU/GPU-Macros.h"
-#include "MillerInc.PhysicsEngine/GPU/Cuda-Engine/gpuScene.h"
 
-using namespace std;
-// #define CUDA_AVAILABLE false
+using namespace MillerPhysics;
 
-
-class Testing
-{
-public:
-	static GPUScene* createScene(GPUScene* scene, int numOfObjs)
-	{
-		for (int i = 0; i < numOfObjs; i++)
-		{
-			scene->addCollisionObject(new Sphere(0.0, 1.0, Vector3()));
-		}
-		return scene;
-	}
-};
 
 
 int main()
 {
+	// Test 1: Euler to Quaternion and back
+	MVector euler(0.1f, 0.2f, 0.3f);
+	MQuaternion quatFromEuler = fromEuler(euler);
+	MVector eulerFromQuat = toEuler(quatFromEuler);
 
-	auto* scene = Testing::createScene(new GPUScene(), 1);
+	std::cout << "Original Euler angles: (" << euler.x << ", " << euler.y << ", " << euler.z << ")\n";
+	std::cout << "Quaternion from Euler: (" << quatFromEuler.w << ", " << quatFromEuler.x << ", " << quatFromEuler.y << ", " << quatFromEuler.z << ")\n";
+	std::cout << "Euler angles from Quaternion: (" << eulerFromQuat.x << ", " << eulerFromQuat.y << ", " << eulerFromQuat.z << ")\n";
 
-	std::cout << scene->getNumCollisionObjects() << std::endl;
+	// Test 2: Axis-Angle to Quaternion and back
+	MVector axis(1.0f, 0.0f, 0.0f);
+	float angle = M_PI / 4; // 45 degrees
+	MQuaternion quatFromAxisAngle = fromAxisAngle(axis, angle);
+	auto [axisFromQuat, angleFromQuat] = toAxisAngle(quatFromAxisAngle);
 
-	Sphere* sph = new Sphere(0.0, 10.0, Vector3());
+	std::cout << "Original Axis: (" << axis.x << ", " << axis.y << ", " << axis.z << "), Angle: " << angle << "\n";
+	std::cout << "Quaternion from Axis-Angle: (" << quatFromAxisAngle.w << ", " << quatFromAxisAngle.x << ", " << quatFromAxisAngle.y << ", " << quatFromAxisAngle.z << ")\n";
+	std::cout << "Axis from Quaternion: (" << axisFromQuat.x << ", " << axisFromQuat.y << ", " << axisFromQuat.z << "), Angle: " << angleFromQuat << "\n";
 
-	sph->name = "Remove Sphere";
 
-	scene->addCollisionObject(sph);
-
-	std::cout << scene->getNumCollisionObjects() << std::endl;
-
-	scene->removeCollisionObject(sph);
-
-	std::cout << scene->getNumCollisionObjects() << std::endl;
 
 	return 0;
 }
-
-
-// 0119949400
-// 0218057200
-// 0198196200
-// 0119884000
-// 0071591000
-// 2324563456
