@@ -1,7 +1,4 @@
-﻿# CMakeList.txt : CMake project for PhysInteractive, include source and define
-# project specific logic here.
-#
-cmake_minimum_required(VERSION 3.22)
+﻿cmake_minimum_required(VERSION 3.22)
 project(PhysInteractive LANGUAGES CXX)
 
 # Set the C++ standard to the latest supported by the compiler
