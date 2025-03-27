@@ -2,18 +2,9 @@
 # project specific logic here.
 #
 cmake_minimum_required(VERSION 3.22)
-project(PhysicsEngine LANGUAGES CXX)
-# Set the compiler
-#if (WIN32)
-#  set(CMAKE_CXX_COMPILER "C:/Program Files/LLVM/bin/clang++.exe")
-#elseif (UNIX)
-#  set(CMAKE_CXX_COMPILER "/usr/bin/clang++")
-#  endif()
-
-  
+project(PhysInteractive LANGUAGES CXX)
 
 # Set the C++ standard to the latest supported by the compiler
-
 set(CMAKE_CXX_STANDARD 23) # C++23
 
 # Enable Hot Reload for MSVC compilers if supported.
@@ -21,8 +12,6 @@ if (POLICY CMP0141)
   cmake_policy(SET CMP0141 NEW)
   set(CMAKE_MSVC_DEBUG_INFORMATION_FORMAT "$<IF:$<AND:$<C_COMPILER_ID:MSVC>,$<CXX_COMPILER_ID:MSVC>>,$<$<CONFIG:Debug,RelWithDebInfo>:EditAndContinue>,$<$<CONFIG:Debug,RelWithDebInfo>:ProgramDatabase>>")
 endif()
-
-set(CMAKE_CXX_STANDARD 23) # C++23
 
 # Set the CMP0146 policy to NEW
 if (POLICY CMP0146)
