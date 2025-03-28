@@ -10,7 +10,8 @@ void SimpleObjectTest();
 
 int main()
 {
-
+	SimpleObjectTest();
+	EulerTest(); 
 
 	return 0;
 }
