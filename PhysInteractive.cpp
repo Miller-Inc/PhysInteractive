@@ -38,7 +38,7 @@ void DevFunc()
 {
 	MScene scene;
 	MObject object1({0.0f, 0.0f, 1000.0f}, MQuaternion(), 1000);
-	MObject object2({0.0f, 0.0f, 1000.0f}, MQuaternion(), 1000);
+	MObject object2({0.0f, 0.0f, 0.0f}, MQuaternion(), 1000);
 	MObject object3({0.0f, 0.0f, 1000.0f}, MQuaternion(), 1000);
 	object1.SetupPhysics(PhysicsSim::SimplePhysicsSimulation);
 	object2.SetupPhysics(PhysicsSim::SimplePhysicsSimulation);
@@ -46,6 +46,9 @@ void DevFunc()
 	object1.SetSimulatePhysics(true);
 	object2.SetSimulatePhysics(true);
 	object3.SetSimulatePhysics(true);
+	object1.m_bounds = new MBounds(MBounds::DefaultCubeBounds(object1.GetPosition(), 10.0f));
+	object2.m_bounds = new MBounds(MBounds::DefaultCubeBounds(object2.GetPosition(), 10.0f));
+	object3.m_bounds = new MBounds(MBounds::DefaultCubeBounds(object3.GetPosition(), 10.0f));
 	scene.addObject(&object1);
 	scene.addObject(&object2);
 	scene.addObject(&object3);
